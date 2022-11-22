@@ -1,0 +1,40 @@
+{% extends 'teams/base.html' %}
+{% load static %}
+{% block title %}
+  Select your teams
+{% endblock %}
+
+{% block content %}
+
+   
+    <form action="{% url 'picks' %}" method = "GET">
+      {% comment %}
+      {% csrf_token %}
+      {% endcomment %}
+      
+        {% for team in teams %}
+          {% if team.week_number == 1 %}
+          <div class="container1 font-height">
+            <div>
+              <input type="radio" name="{{ team.away_team }}"  id={{ team.id }}  value={{ team.id }}  />
+              <label for="pick">{{ team.away_team}}</label>
+            </div>
+            <div>
+              <input type="radio" name="{{ team.home_team }}"   id={{ team.id }}  value={{ team.id }}  />
+              <label for="pick">{{ team.home_team}}</label>
+            </div>
+          </div>
+            
+          
+          {% endif %}
+        {% endfor %}
+    </div>
+     <div class="center">
+     <input type="submit" value="Submit">
+    </div>
+    </form>
+  
+
+
+
+{% endblock %}
