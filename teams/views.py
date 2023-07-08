@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from . forms import HomeAwayForm, TeamForm, WinnerPickForm
-from .models import Team, Home_Away
+from .models import Team, Home_Away,WinnerPick
+from players import PLAYERS  # Players in the pool
 
 def select_week(request):
     pass
@@ -44,7 +45,7 @@ def print_final(request):
 def select_your_picks(request):
     pass
 
-def winnerPick(request):
+def winnerPick(request):  # Lets select the winner from a particular week
     form = WinnerPickForm(request.POST or None)
      
     
@@ -54,7 +55,7 @@ def winnerPick(request):
         form.save()
         return redirect('winner')
     
-    
+    form=WinnerPickForm()
     context={
         "form":form
     }
@@ -65,25 +66,19 @@ def total(request):
     pass
 
 def print_winners(request):
-    pass
+    return render(request, 'teams/print_winners.html')
 
 def printWeek(request,week_number  ):
     
     home_aways = Home_Away.objects.filter(week_number=week_number).order_by('startdate','starttime')
     
     
-    if week_number == 7:
-        byes = ['Buffalo,','LA Rams,','Minnesota,','Philadelphia'] 
-    if week_number == 6:
-        byes = ['Detroit,','Houston,','Las Vegas','Tennessee'] 
-            
-    else:
-        byes=''    
+     
     context = {
         'home_aways':home_aways,
         'week_number':week_number,
          
-        'byes':byes
+       
 
 
     } 
@@ -114,3 +109,25 @@ def select_winners(request,week_number):
     
       
     return render(request, 'yourteams/select_your_picks.html', context)    
+
+def print_week(request):  # This function added 7/7/2023 to replace printweek function
+    week_number=request.GET.get('week_number')
+    home_aways = Home_Away.objects.filter(week_number=week_number).order_by('startdate','starttime')
+    
+    
+    
+    context = {
+        'home_aways':home_aways,
+        'week_number':week_number,
+         
+        
+
+
+    } 
+    
+           
+
+    return render (request,'teams/print_week.html', context)
+
+
+

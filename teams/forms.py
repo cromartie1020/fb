@@ -1,5 +1,5 @@
 from django import forms
-from .models import Team, Home_Away
+from .models import Team, Home_Away, WinnerPick
 from django.db import models
 
 
@@ -23,8 +23,7 @@ class TeamForm(forms.ModelForm):
     class Meta:
         model = Team
         fields = ['name']
-from django import forms
-from .models import WinnerPick
+
 
 
 class WinnerPickForm(forms.ModelForm):
