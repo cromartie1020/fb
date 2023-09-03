@@ -8,12 +8,9 @@
 
    
     <form action="{% url 'picks' %}" method = "GET">
-      {% comment %}
-      {% csrf_token %}
-      {% endcomment %}
       
         {% for team in teams %}
-          {% if team.week_number == 1 %}
+          
           <div class="container1 font-height">
             <div>
               <input type="radio" name="{{ team.away_team }}"  id={{ team.id }}  value={{ team.id }}  />
@@ -26,7 +23,7 @@
           </div>
             
           
-          {% endif %}
+          
         {% endfor %}
     </div>
      <div class="center">

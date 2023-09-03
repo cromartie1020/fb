@@ -131,3 +131,24 @@ def print_week(request):  # This function added 7/7/2023 to replace printweek fu
 
 
 
+def confirm_selections(request):
+    # List our selections from HomeAway and show an option 
+    # to edit my choices.
+    week_number=request.GET.get('week_number')
+    selections=Home_Away.objects.filter(week_number=week_number)
+    week_number=request.GET.get('week_number')
+    home_aways = Home_Away.objects.filter(week_number=week_number).order_by('startdate','starttime')
+    
+    
+    
+    context={
+        'selections':selections,
+        'week_number':week_number,
+        'home_aways':home_aways,
+    }
+    return render(request, 'teams/print_week.html',context)  
+
+def pick_week(request):
+
+
+    return render(request,'teams/pick_week.html') 

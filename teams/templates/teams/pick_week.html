@@ -1,0 +1,25 @@
+{% extends 'teams/base.html' %}
+{% load static %}
+{% block title %}
+ Confirm selection
+{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+  <form action="{% url 'confirm_selections' %}">
+
+    <input type="text" name="week_number">
+    <input type="submit" value="Submit">
+  </form>
+  <label for="week">Select Week Number </label>
+  <form action="{% url 'confirm_selections' %}">
+    <select name="week_number" id="week">
+      <option value=1>1</option>
+      <option value=2>2</option>
+    </select>
+    <button type="submit">Submit</button>
+  </form>
+</div>
+{% endblock%}
+
+

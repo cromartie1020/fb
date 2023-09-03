@@ -23,7 +23,7 @@ class Team(models.Model):
 class Home_Away(models.Model):
     
     
-    week_number = models.IntegerField(default=7)
+    week_number = models.IntegerField(blank=True)
     
     away_team = models.CharField(max_length=100, choices=TEAMS, default='')
     home_team = models.CharField(max_length=100, choices=TEAMS, default='')
@@ -53,10 +53,8 @@ class WinnerPick(models.Model):
     home = models.CharField(max_length=200, choices =TEAMS, null= True )
     away_score = models.IntegerField(null = True, default=0)    
     home_score = models.IntegerField(null = True, default=0)
-    selected_pick  = models.CharField(max_length=250, 
-    choices=TEAMS, null = True)
-    actual_winner = models.CharField(max_length=250, 
-    choices=TEAMS, null = True)
+    selected_pick  = models.CharField(max_length=250, choices=TEAMS, null = True)
+    actual_winner = models.CharField(max_length=250,  choices=TEAMS, null = True)
     status = models.CharField(max_length=6, null=True, choices=STATUS)
     
     class Meta:

@@ -15,6 +15,11 @@
         <li class="nav-item active">
           <a class="nav-link" href="{% url 'select_week' %}">Generate weekly schedule</a>
         </li>
+        <li class="nav-item active">
+          <a class="nav-link" href="{% url 'pick_week' %}">Pick Week to Print            
+          </a>
+        </li>
+       
         <li class="nav-item">
           {% if user.is_authenticated %}
           <a class="nav-link" href="{% url 'account_logout' %}">Logout</a>
