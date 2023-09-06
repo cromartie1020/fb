@@ -86,29 +86,30 @@ def printWeek(request,week_number  ):
            
 
     return render (request,'teams/print_week.html', context)
-def select_winners(request,week_number):
-    home_aways=Home_Away.objects.filter(week_number__exact = week_number)
-    for home_away in home_aways:
-        print(home_away.away_team,home_away.home_team, home_away.id)
-        
-    form=WinnerPickForm(request.POST or None)
+
+
+def select_winners(request):
+   
     
-    if form.is_valid():
-        form.save()
-        
-    
+    week_number=request.GET.get('week_number')
+    print('week_number: ',week_number)
+    selections=Home_Away.objects.filter(week_number=week_number)
+    week_number=request.GET.get('week_number')
+    home_aways = Home_Away.objects.filter(week_number=week_number).order_by('startdate','starttime')
+    form=WinnerPickForm()
      
     context = {
         
-        'form':form
+        'form':form,
+        'week_number':week_number,
+        'home_aways':home_aways,
         
     
     }
     
-    form=WinnerPickForm()
     
       
-    return render(request, 'yourteams/select_your_picks.html', context)    
+    return render(request, 'teams/select_winners.html', context)    
 
 def print_week(request):  # This function added 7/7/2023 to replace printweek function
     week_number=request.GET.get('week_number')

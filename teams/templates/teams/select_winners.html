@@ -1,15 +1,17 @@
 {% extends 'teams/base.html' %}
 {% load static %}
 {% block title %}
-  Select your teams
+  Select Week {{ week_number }} Winners
 {% endblock %}
 
 {% block content %}
 
    
-    <form action="{% url 'picks' %}" method = "GET">
-      
-        {% for team in teams %}
+    <form action="{% url 'select_winners' %}" method = "GET">
+        <div class="center"></div>    
+          <input type="text" name="week_number">
+        </div>
+        {% for team in home_aways %}
           
           <div class="container1 font-height">
             <div>
