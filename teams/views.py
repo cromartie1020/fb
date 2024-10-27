@@ -136,15 +136,17 @@ def confirm_selections(request):
     # List our selections from HomeAway and show an option 
     # to edit my choices.
     week_number=request.GET.get('week_number')
+    year = request.GET.get('year') 
     #year = request.GET.get((year)
     selections=Home_Away.objects.filter(week_number=week_number)
     week_number=request.GET.get('week_number')
-    home_aways = Home_Away.objects.filter(week_number=week_number).filter(startdate__year=2024).order_by('startdate','starttime')
+    home_aways = Home_Away.objects.filter(week_number=week_number).filter(startdate__year=year).order_by('startdate','starttime')
     
     context={
         'selections':selections,
         'week_number':week_number,
         'home_aways':home_aways,
+        'year':year,
     }
     return render(request, 'teams/print_week.html',context)  
 
