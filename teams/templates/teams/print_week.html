@@ -41,8 +41,9 @@
    {% ifchanged %}
        <b><p class="center">{{ home.startdate|date:'l, M. j    '}}</p> </b>
    {% endifchanged %}
+   
    <div class="divide center">
-
+    
     
     <div class="right">
       <img src="{% static 'teams/images/select.jpg' %}" alt="A mark to select home or away team">
@@ -68,7 +69,7 @@
           {{ home.starttime|time:"g:i A" }}
     </div>
 
-    
+    <br>
 
     
   </div>
@@ -82,7 +83,7 @@
   {% endif %}
   </div>
   <div class="center">
-    <b>Tiebreaker:</b>Total Points Scored in Monday Night Football Game. __________
+    <b>Tiebreaker:</b>Total Points Scored in Monday Night Football Games. __________
     <br />
     Name___________________________     Total Correct _______________________
 

@@ -96,7 +96,8 @@ def select_winners(request):
     home_aways = Home_Away.objects.filter(week_number=week_number).order_by('startdate','starttime')
     total=home_aways.count()
     form=WinnerPickForm()
-     
+
+
     context = {
         
         'form':form,
@@ -142,6 +143,9 @@ def confirm_selections(request):
     week_number=request.GET.get('week_number')
     home_aways = Home_Away.objects.filter(week_number=week_number).filter(startdate__year=year).order_by('startdate','starttime')
     
+    # ______Lets find a way to determine the teams on a bye. _____________________________
+    #_____________________________________________________________________________________
+
     context={
         'selections':selections,
         'week_number':week_number,
