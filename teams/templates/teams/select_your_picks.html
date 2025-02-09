@@ -1,45 +1,21 @@
 {% extends 'teams/base.html' %}
 {% load static %}
+{% load crispy_forms_tags %}
 {% block title %}
   Select your teams
 {% endblock %}
 
 {% block content %}
+<div class="col-lg-6 offset-lg-3">
 
-<form action="{% url 'winner' %}" method="POST">
-  
-  {% csrf_token %}
-  {{ form.as_p }}
-  <!--
-  {% for h_a in home_away %} 
-  <div class="container1 font-height">
-    <div>
-      <input type="radio" name="first" id={{ team.id }} value={{ team.id }} />
-      <label for="pick">{{ h_a.away_team }}</label>
-    </div>
-    <div>
-      <input type="radio" name="first" id={{ team.id }} value={{ team.id }} />
-      <label for="pick">{{ h_a.home_team }}</label>
+  <form action="{% url 'winner' %}" method="POST">
     
-    
-    </div>
-    <div>
-      <a href="{% url 'picks'  %}">
-         <input type="submit" value="Pick the winner." name={{ h_a.away_team }}>
-      </a>
-    </div>
-  </div>
-  {% endfor %}
-  --> 
-  <input type="submit" value="Submit" >
-  <a href="{% url 'select_week' %}"></a><input type="submit" value="Done" >
-
-
+    {% csrf_token %}
+    {{ form|crispy }}
+    <input type="submit" value="Submit" >
+    <a href="{% url 'select_week' %}"></a><input type="submit" value="Done" >
   
-
-  
-
-  
-</form>
+  </form>
+</div>
 
 {% endblock %}
