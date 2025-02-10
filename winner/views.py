@@ -26,4 +26,4 @@ def select_winners(request):
         
     
     }
-    
+    return render(request, 'teams/select_winners.html', context)  
