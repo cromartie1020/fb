@@ -13,8 +13,8 @@ urlpatterns = [
     path('<int:week_number>/',views.printWeek, name='print_week'),# Print this weeks schedule.
     path('confirm_selections/',views.confirm_selections, name='confirm_selections'),
     path('pick_week/',views.pick_week,name='pick_week'),
-    #path('pick_week/pick_year/',views.pick_week_year, name = 'pick_week_year'),
-    #path('select_winners/',views.select_winners,name='select_winners'),
+    path('select_winners/<int:week_number>/<str:player>/',views.select_winners,name='select_winners'),
+    path('select_winners/',views.select_winners,name='select_winners'),
     path('save_winners/',views.save_winners,name='save_winners'),  
     path('week/',views.winner_select_view, name='winner_select'),  
 
