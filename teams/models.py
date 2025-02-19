@@ -24,7 +24,7 @@ class Team(models.Model):
 class Home_Away(models.Model):
     
     
-    week_number = models.IntegerField(blank=True)
+    week_number = models.IntegerField(blank=False, null=False)
     
     away_team = models.CharField(max_length=100, choices=TEAMS, default='')
     home_team = models.CharField(max_length=100, choices=TEAMS, default='')
