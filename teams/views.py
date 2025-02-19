@@ -43,18 +43,40 @@ def select_your_picks(request):
     pass
 
 def winnerPick(request):  # Lets select the winner from a particular week
-    form = WinnerPickForm(request.POST or None)
-     
+   
     
-    if form.is_valid():
-        print(request.POST['home'])
-        print(request.POST['status'])
-        form.save()
-        return redirect('winner')
     
-    form=WinnerPickForm()
+   
+    if request.method == ('POST' or None):
+        '''
+        week_number = request.POST['week_number']
+        week_number=int(week_number)
+        year = request.POST['year']
+        year=int(year)
+        player = request.POST['player']
+        away = request.POST['away']
+        home = request.POST['home']
+        away_score = request.POST['away_score']
+        home_score = request.POST['home_score']
+        selected_pick = request.POST['selected_pick']
+        actual_winner = request.POST['actual_winner']
+        status = request.POST['status']
+        form = WinnerPickForm(week_number=week_number,year=year,player=player, away=away,home=home,away_score=away_score,
+                                            home_score=home_score, selected_pick=selected_pick, actual_winner=actual_winner,
+                                            status=status)
+        '''
+        form = WinnerPickForm(request.POST)                                    
+        if form.is_valid():
+            week_number=form.cleaned_data['week_number']
+            print(week_number)
+            form.save()
+            return redirect('select_week')
+    else:
+        form=WinnerPickForm()
+    
     context={
-        "form":form
+        "form":form,
+       
     }
     
     return render(request,'teams/select_your_picks.html', context)
@@ -75,9 +97,6 @@ def printWeek(request,week_number  ):  # We also need to check the year.
         'home_aways':home_aways,
         'week_number':week_number,
         'total':total       
-       
-
-
     } 
     
            

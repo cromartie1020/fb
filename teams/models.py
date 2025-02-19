@@ -48,7 +48,7 @@ STATUS = [
 ]
 class WinnerPick(models.Model):
     week_number  = models.IntegerField(null=True )
-
+    year    = models.IntegerField(default=2025)
     player       = models.CharField(max_length=200, choices=PLAYERS, null=True)
     away = models.CharField(max_length=200, choices =TEAMS, null= True )
     home = models.CharField(max_length=200, choices =TEAMS, null= True )
@@ -62,7 +62,8 @@ class WinnerPick(models.Model):
         ordering = ['-week_number', 'player'] 
 
     def __str__(self):
-        return self.selected_pick    
+        return self.selected_pick   
+     
 @login_required    
 class WinnerSelect(models.Model):
     player=models.ForeignKey(User,on_delete=models.CASCADE)

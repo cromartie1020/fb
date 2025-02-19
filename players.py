@@ -1,8 +1,8 @@
 PLAYERS = [
-        ("Renee", "Renee"),
+        ("Mom", "Mom"),
         ("Mr. C.", "Mr. C."),
-        ("Tiara", "Tiara")
-        #("Stefaun", "Stefaun")
+        ("Tiara", "Tiara"),
+        ("Stefaun", "Stefaun")
     ]
 
-Players=["Mom","Mr. C.","Tiara"]
+Players=["Mom","Mr. C.","Tiara","Stefaun"]
