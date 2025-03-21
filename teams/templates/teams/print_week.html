@@ -24,7 +24,7 @@
     <div class="left">
     </div>
     <div class="left">
-        <h3>Home Teams</h3>
+        <h3>Home Teams</h3> 
     </div>
 
     <div class="left">
@@ -52,7 +52,7 @@
     <div class="left">
         
         
-        {{ home.away_team|title }}  
+       {{ home.away_team|title }}  
     </div>
     <div class="left">
         at
@@ -62,7 +62,7 @@
     </div>
 
     <div class="left">
-        <img src="{% static 'teams/images/select.jpg' %}" alt="A mark to select home or away team">
+        <img src="{% static 'teams/images/select.jpg' %}" alt="A mark to select home or away team"> <a class='noprint' href="{% url 'update' home.id %}">Update</a> 
     </div>
 
     <div class="left">

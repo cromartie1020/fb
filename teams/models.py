@@ -46,6 +46,10 @@ STATUS = [
     ("Lose","Lose"),
     ("Tie", "Tie")
 ]
+PICK =[
+    ('Away','Away'),
+    ('Home','Home'),
+]
 class WinnerPick(models.Model):
     week_number  = models.IntegerField(null=True )
     year    = models.IntegerField(default=2025)
@@ -54,8 +58,8 @@ class WinnerPick(models.Model):
     home = models.CharField(max_length=200, choices =TEAMS, null= True )
     away_score = models.IntegerField(null = True, default=0)    
     home_score = models.IntegerField(null = True, default=0)
-    selected_pick  = models.CharField(max_length=250, choices=TEAMS, null = True)
-    actual_winner = models.CharField(max_length=250,  choices=TEAMS, null = True)
+    selected_pick  = models.CharField(max_length=250, choices=PICK, null = True)
+    actual_winner = models.CharField(max_length=250,  choices=PICK, null = True)
     status = models.CharField(max_length=6, null=True, choices=STATUS)
     
     class Meta:
@@ -63,7 +67,26 @@ class WinnerPick(models.Model):
 
     def __str__(self):
         return self.selected_pick   
-     
+    
+class WinnerPick1(models.Model):                               # Week_1 year= 2025 'Mr. C.' 
+    week_number  = models.IntegerField(default = 1,null=True )
+    year    = models.IntegerField(default=2025)
+    player       = models.CharField(max_length=200, choices=PLAYERS, default= 'Mr. C.',null=True)
+    away = models.CharField(max_length=200, choices =TEAMS, null= True )
+    home = models.CharField(max_length=200, choices =TEAMS, null= True )
+    away_score = models.IntegerField(null = True, default=0)    
+    home_score = models.IntegerField(null = True, default=0)
+    selected_pick  = models.CharField(max_length=250, choices=PICK, null = True)
+    actual_winner = models.CharField(max_length=250,  choices=PICK, null = True)
+    status = models.CharField(max_length=6, null=True, choices=STATUS)
+    
+    class Meta:
+        ordering = ['-week_number', 'player'] 
+
+    def __str__(self):
+        return self.selected_pick   
+
+
 @login_required    
 class WinnerSelect(models.Model):
     player=models.ForeignKey(User,on_delete=models.CASCADE)

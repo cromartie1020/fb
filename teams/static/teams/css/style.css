@@ -30,6 +30,7 @@ body {
   text-align: right
 }
 
+
 li {
   list-style-type: none;
 }
@@ -74,4 +75,18 @@ li {
   border: 5px solid green;
 
 
+}
+
+@media print
+{
+    .noprint {
+        display:none;
+    }    
+}
+
+th, td {
+  padding: 10px;
+}
+tr:nth-child(even) {
+  background-color: #D6EEEE;
 }

@@ -7,7 +7,7 @@ urlpatterns = [
     path('accounts/', include('allauth.urls')),
     path('',include('teams.urls')),
     path('admin/', admin.site.urls),
-    path('select_winners/', include('winner.urls')),
+    
 ]
 
 
