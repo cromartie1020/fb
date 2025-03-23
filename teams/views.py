@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect,HttpResponseRedirect
+from django.shortcuts import render, redirect
 from . forms import HomeAwayForm, TeamForm, WinnerPickForm,WinnerSelectForm
 from .models import Team, Home_Away,WinnerPick
 from players import PLAYERS,Players # Players in the pool
@@ -15,8 +15,6 @@ def teamform(request):
 
     return render(request, 'teams/team.html', {'form': form})
 
-def winnerPickUpdate(request,id):
-    pass
 
 
 def homeawayview(request):
@@ -46,23 +44,6 @@ def select_your_picks(request):
 
 def winnerPick(request):  # Lets select the winner from a particular week
     if request.method == ('POST' or None):
-        '''
-        week_number = request.POST['week_number']
-        week_number=int(week_number)
-        year = request.POST['year']
-        year=int(year)
-        player = request.POST['player']
-        away = request.POST['away']
-        home = request.POST['home']
-        away_score = request.POST['away_score']
-        home_score = request.POST['home_score']
-        selected_pick = request.POST['selected_pick']
-        actual_winner = request.POST['actual_winner']
-        status = request.POST['status']
-        form = WinnerPickForm(week_number=week_number,year=year,player=player, away=away,home=home,away_score=away_score,
-                                            home_score=home_score, selected_pick=selected_pick, actual_winner=actual_winner,
-                                            status=status)
-        '''
         form = WinnerPickForm(request.POST)                                    
         if form.is_valid():
             week_number=form.cleaned_data['week_number']
@@ -70,45 +51,11 @@ def winnerPick(request):  # Lets select the winner from a particular week
             form.save()
             return redirect('select_week')
     else:
-        home_away = Home_Away.objects.all().first()
         form=WinnerPickForm()
-        print(form,home_away.away_team, home_away.home_team)
     
     context={
         "form":form,
-        "away_team":home_away.away_team,
-        "home_team":home_away.home_team,
        
-    }
-    
-    return render(request,'teams/select_your_picks.html', context)
-
-def winnerPick1(request):  # Lets select the winner from a particular week
-    if request.method == 'GET':
-        week_number = request.GET['week_number']
-        year = request.GET['year']
-        team = Home_Away.objects.filter(startdate__startswith = year).filter(week_number=week_number).first()
-        id = team.id
-        # save id
-        # get the next id
-        away=team.away_team
-        home=team.home_team
-        player=request.GET['player']
-        form=WinnerPickForm({"week_number":week_number,"year":year, "player":player,"away":away,"home":home})
-    
-    else:
-       
-        form = WinnerPickForm(request.POST)                                    
-        if form.is_valid():
-            #week_number=form.cleaned_data['week_number']
-            
-            form.save()
-            return redirect('select_week')
-        
-        
-    context={
-        "form":form,
-     
     }
     
     return render(request,'teams/select_your_picks.html', context)
@@ -216,11 +163,6 @@ def pick_week(request):
     }
     return render(request,'teams/pick_week.html', context)
 
-def winnerPickList(request):
-    list = WinnerPick.objects.all()
-    
-    return render (request, 'teams/winnerPickList.html',{'list':list} )     
-
 def save_winners(request):
     print('request', request)
     pick=request.GET.get('8')
@@ -249,20 +191,45 @@ def winner_select_view(request):
 
     return render(request,'teams/select_winners.html',context)
 
-def update(request,id):
+def update(request, id):
     list = WinnerPick.objects.get(id=id)
-   
-    form = WinnerPickForm(instance=list)
+    form = WinnerPickForm(instance = list)
     if request.method==('POST' or None):
-        form=WinnerPickForm( request.POST,instance=list)
+        form = WinnerPickForm(request.POST, instance = list)
         if form.is_valid():
-            
             form.save()
             return redirect('list')
-        
+
+
     context = {
         'form':form,
-        
-        
     }
-    return render(request, 'teams/winnerPickUpdate.html', context)
+    return render(request,'teams/select_your_picks.html',context )
+
+def winnerPickNew(request, id):
+    list = WinnerPick.objects.get(id=id)
+    form = WinnerPickForm(instance=list)
+    if request.method ==('POST' or None):
+        week_number   = request.GET['week_number']
+        year          = request.GET['year']
+        player        = request.GET['player']
+        away          = request.GET['away']
+        home          = request.GET['home']
+        away_score    = request.GET['away_score']
+        home_score    = request.GET['home_score']
+        actual_winner = request.GET['actual_winner']
+        status        = request.GET['status']
+        WinnerPick.objects.create(week_number=week_number,year=year,player=player,away=away,home=home,away_score=away_score,home_score=home_score,actual_winner=actual_winner,status=status)
+        return redirect('list')
+    context = {
+        'form':form,
+    }
+    return render(request, 'teams/select_your_picks.html', context)
+    
+    
+def winnerPickList(request):
+    list=WinnerPick.objects.all()
+    context = {
+        'list':list,
+    }
+    return render(request, 'teams/winnerPickList.html', context)
