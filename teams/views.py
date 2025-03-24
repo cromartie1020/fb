@@ -164,7 +164,7 @@ def pick_week(request):
     return render(request,'teams/pick_week.html', context)
 
 def save_winners(request):
-    print('request', request)
+    
     pick=request.GET.get('8')
     print('pick',pick)
     context={
@@ -233,3 +233,37 @@ def winnerPickList(request):
         'list':list,
     }
     return render(request, 'teams/winnerPickList.html', context)
+
+def print_player_week_selections(request):
+    form =WinnerPickForm()
+    if request.method=='POST':
+        week_number = request.POST['week_number']
+        year        = request.POST['year']
+        player      = request.POST['player']
+        winners     = WinnerPick.objects.filter(week_number__icontains=week_number).filter(year__icontains=year).filter(player__icontains=player)
+        for winner in winners:
+            print(winner.home)
+        context={
+            'winners':winners,
+        }    
+        return render(request,'teams/print_selected_winners.html', context)    
+    context ={
+        'form':form,
+        'players':Players,
+        #'winners':winners    
+    }
+    return render(request,'teams/print_player_week_selections.html', context)
+
+def pick_winner_list(request):
+    week_number=request.GET.get('week_number')
+    year = request.GET.get('year') 
+    player = request.GET.get('player')
+    
+    context={
+        'week_number':week_number,
+        'year'       :year,
+        'players'     :Players,
+        
+    }    
+    return render(request,'teams/print_player_week_selections.html',context)
+

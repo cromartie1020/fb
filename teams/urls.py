@@ -19,4 +19,6 @@ urlpatterns = [
     path('list/', views.winnerPickList, name='list'), 
     path('update/<int:id>/', views.update, name='update'),  
     path('winnerPickNew/<int:id>/', views.winnerPickNew, name='winnerPickNew'),
+    path('winner_list/',views.print_player_week_selections, name='winner_list'),
+    path('pick_winner_list/', views.pick_winner_list, name='pick_winner_list'),
 ]
