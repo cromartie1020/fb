@@ -267,3 +267,18 @@ def pick_winner_list(request):
     }    
     return render(request,'teams/print_player_week_selections.html',context)
 
+def winnerPick1(request):
+    if request.method =='GET':
+        week_number= request.GET['week_number']
+        year = request.GET['year']
+        player = request.GET['player']
+        form= WinnerPickForm({'week_number':week_number,'year':year,'player':player})
+    else:
+        form=WinnerPickForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect('select_week')
+    context={
+        'form':form
+    }
+    return render(request, 'teams/select_your_picks.html', context)
