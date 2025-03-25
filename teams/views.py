@@ -241,10 +241,10 @@ def print_player_week_selections(request):
         year        = request.POST['year']
         player      = request.POST['player']
         winners     = WinnerPick.objects.filter(week_number__icontains=week_number).filter(year__icontains=year).filter(player__icontains=player)
-        for winner in winners:
-            print(winner.home)
+        
         context={
             'winners':winners,
+            #'iterater':range(0,10),
         }    
         return render(request,'teams/print_selected_winners.html', context)    
     context ={
