@@ -16,10 +16,11 @@ urlpatterns = [
     path('select_winners/',views.select_winners,name='select_winners'),
     path('save_winners/',views.save_winners,name='save_winners'),  
     path('week/',views.winner_select_view, name='winner_select'),
-    path('list/', views.winnerPickList, name='list'), 
+    path('team_list/', views.winnerPickList, name='team_list'), 
     path('update/<int:id>/', views.update, name='update'),  
     path('winnerPickNew/<int:id>/', views.winnerPickNew, name='winnerPickNew'),
     path('winner_list/',views.print_player_week_selections, name='winner_list'),
     path('pick_winner_list/', views.pick_winner_list, name='pick_winner_list'),
     path('winner1/',views.winnerPick1,name='winner1'),
+    path('delete/<int:id>/', views.delete, name='delete'),
 ]

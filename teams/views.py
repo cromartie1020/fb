@@ -34,7 +34,7 @@ def homeawayview(request):
 def print_final(request):
     winners=WinnerPick.objects.all()
     context = {
-        "winners":winners,
+        "winners":winner,
         "players":PLAYERS
     }
     return render(request, 'teams/final.html',context)
@@ -192,23 +192,24 @@ def winner_select_view(request):
     return render(request,'teams/select_winners.html',context)
 
 def update(request, id):
-    list = WinnerPick.objects.get(id=id)
-    form = WinnerPickForm(instance = list)
-    if request.method==('POST' or None):
-        form = WinnerPickForm(request.POST, instance = list)
+    entry = WinnerPick.objects.get(id=id)
+    if request.method != 'POST':
+        form = WinnerPickForm(instance = entry)
+    else:
+        form = WinnerPickForm(instance=entry, data=request.POST)
         if form.is_valid():
-            form.save()
-            return redirect('list')
-
-
+           form.save()
+        return redirect('team_list')        
     context = {
+
+        'entry':entry,
         'form':form,
     }
     return render(request,'teams/select_your_picks.html',context )
 
 def winnerPickNew(request, id):
-    list = WinnerPick.objects.get(id=id)
-    form = WinnerPickForm(instance=list)
+    instance = WinnerPick.objects.get(id=id)
+    form = WinnerPickForm(instance=instance)
     if request.method ==('POST' or None):
         week_number   = request.GET['week_number']
         year          = request.GET['year']
@@ -220,7 +221,7 @@ def winnerPickNew(request, id):
         actual_winner = request.GET['actual_winner']
         status        = request.GET['status']
         WinnerPick.objects.create(week_number=week_number,year=year,player=player,away=away,home=home,away_score=away_score,home_score=home_score,actual_winner=actual_winner,status=status)
-        return redirect('list')
+        return redirect('team_list')
     context = {
         'form':form,
     }
@@ -277,8 +278,18 @@ def winnerPick1(request):
         form=WinnerPickForm(request.POST)
         if form.is_valid():
             form.save()
-            return HttpResponseRedirect('select_week')
+            return redirect('select_week')
     context={
         'form':form
     }
     return render(request, 'teams/select_your_picks.html', context)
+def delete(request, id):
+    success=''
+    winner=winnerPick.objects.get(id=id)
+    winner.delete()
+    success='You have deleted the winner.'
+    context = {
+        'success':success,
+    }
+    return render(request, 'teams/delete.html',context)
+    pass

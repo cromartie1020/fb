@@ -28,7 +28,7 @@
        <td class = 'center'> {{winner.home_score }}</td>
        <td class = 'center'>{{winner.selected_pick }}</td>
        <td class = 'center'>{{ winner.status }}</td>
-       <td class = 'center'><a href="{% url 'update' winner.id %}">Update</a> | <a href="{% url 'winnerPickNew' winner.id %}">New Player</a></td>
+       <td class = 'center'><a href="{% url 'update' winner.id %}">Update</a> | <a href="{% url 'winnerPickNew' winner.id %}">New Player</a> |<a href="{% url 'delete' winner.id %}">DELETE</a></td>
     </tr>    
     {% endfor %}
  </table>  
