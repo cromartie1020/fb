@@ -276,6 +276,7 @@ def winnerPick1(request):
         form= WinnerPickForm({'week_number':week_number,'year':year,'player':player})
     else:
         form=WinnerPickForm(request.POST)
+        
         if form.is_valid():
             form.save()
             return redirect('select_week')
