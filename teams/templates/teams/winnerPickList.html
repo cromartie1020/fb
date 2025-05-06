@@ -4,18 +4,20 @@
 {% endblock title %}
 
 {% block content %}
+<form>
  <table>
     <tr>
-        <th>Week Number</th>
+        <th>Week</th>
         <th>Year</th>
         <th>Player</th>
-        <th>Away Team</th>
-        <th>Home Team</th>
-        <th>Away Score</th>
-        <th>Home Score</th>
-        <th>Selected Team</th>
+        <th>Away<br/>Team</th>
+        <th>Home<br/>Team</th>
+        <th>Away<br/> Score</th>
+        <th>Home<br/> Score</th>
+        <th>Actual<br>Winner</th>
+        <th>Selected<br/>Team</th>
         <th>Status</th>
-        <th>Update</th>
+        <th>Update | Delete</th>
     </tr>    
   {% for winner in list %}
     <tr>   
@@ -26,12 +28,14 @@
        <td class = 'center'>{{ winner.home }}</td>
        <td class = 'center'>{{winner.away_score }}</td>
        <td class = 'center'> {{winner.home_score }}</td>
+       <td class = 'center'> {{winner.actual_winner }}</td>
        <td class = 'center'>{{winner.selected_pick }}</td>
        <td class = 'center'>{{ winner.status }}</td>
-       <td class = 'center'><a href="{% url 'update' winner.id %}">Update</a> | <a href="{% url 'winnerPickNew' winner.id %}">New Player</a> |<a href="{% url 'delete' winner.id %}">DELETE</a></td>
+       <td class = 'center'><a href="{% url 'update' winner.id %}">Update</a> | <a href="{% url 'delete' winner.id %}">DELETE</a></td>
     </tr>    
     {% endfor %}
- </table>  
+ </table>
+</form>  
    
  
 {% endblock content %}

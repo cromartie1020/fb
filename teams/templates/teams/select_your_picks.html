@@ -11,39 +11,7 @@
   
   
   {% csrf_token %}
-  <!--
-  <div>
-    <label> Week Number</label> 
-    <input type="number" name="{{ week_number }}" placeholder="{{ week_number }}" />
-    <br/>
-    <label> Player </label>
-    <input type='text' name="{{ player }}" placeholder='{{ player }}'/>
-    <br/>
-    <label> Away Team</label>
-    <input type='text' name="{{away_team}}" placeholder='{{ away_team}}' />
-    <br/>
-    <label> Home Team</label>
-    <input type='text' name="{{ home_team }}" placeholder ='{{ home_team }}' />   
-    <br/>
-    <label> Year </label>
-    <input type='number' name='{{ year }}' placeholder ='{{ year }}' />
-    <br/>
-    <label> Away Score</label>
-    <input type='number' name="{{ away_score }}"  />   
-    <br/> 
-    <label> Home Score</label>
-    <input type='number' name="{{ home_score }}"  />   
-    <br/>
-    <label>Selected Pick</label>
-    <input type=text name="selected_pick" placeholder = "{{ away }}"/>  
-    <br/>
-
-    <label>Actual Winner</label>
-    <input type =text name='actual_winner' value="{{ actual_winner }}" />
-     
-    <br/>
-  </div>
-  -->
+  
   {{ form|crispy }}
    
   <input type="submit" value="Submit" >

@@ -90,3 +90,21 @@ th, td {
 tr:nth-child(even) {
   background-color: #D6EEEE;
 }
+
+
+
+body {
+  background-color: lightblue;
+}
+
+@media screen and (min-width: 400px) {
+  body {
+    background-color: lightgreen;
+  }
+}
+
+@media screen and (min-width: 800px) {
+  body {
+    background-color: lavender;
+  }
+}

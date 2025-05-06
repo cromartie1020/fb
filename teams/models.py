@@ -23,7 +23,6 @@ class Team(models.Model):
 
 class Home_Away(models.Model):
     
-    
     week_number = models.IntegerField(blank=False, null=False)
     
     away_team = models.CharField(max_length=100, choices=TEAMS, default='')
@@ -58,15 +57,15 @@ class WinnerPick(models.Model):
     home = models.CharField(max_length=200, choices =TEAMS, null= True )
     away_score = models.IntegerField(null = True, default=0)    
     home_score = models.IntegerField(null = True, default=0)
-    selected_pick  = models.CharField(max_length=250, choices=PICK, null = True)
-    actual_winner = models.CharField(max_length=250,  choices=PICK, null = True)
-    status = models.CharField(max_length=6, null=True, choices=STATUS)
+    selected_pick  = models.CharField(max_length=250, choices=PICK,blank=True, null = True) # change 4/28/2024
+    actual_winner = models.CharField(max_length=250,  choices=PICK,blank=True, null = True)  # change 4/28/2024
+    status = models.CharField(max_length=6, null=True, choices=STATUS, blank=True) # change 4/28/2024
     
     class Meta:
-        ordering = ['-week_number', 'player'] 
+        ordering = ['-week_number', 'player','-year'] 
 
     def __str__(self):
-        return self.selected_pick   
+        return self.player  
     
 class WinnerPick1(models.Model):                               # Week_1 year= 2025 'Mr. C.' 
     week_number  = models.IntegerField(default = 1,null=True )
