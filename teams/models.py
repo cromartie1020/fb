@@ -43,7 +43,7 @@ class Home_Away(models.Model):
     
 STATUS = [
     ("Win","Win"),
-    ("Lose","Lose"),
+    ("Loss","Loss"),
     ("Tie", "Tie")
 ]
 PICK =[
@@ -51,33 +51,15 @@ PICK =[
     ('Home','Home'),
 ]
 class WinnerPick(models.Model):
-    week_number  = models.IntegerField(null=True )
-    year    = models.IntegerField(default=2025)
-    player       = models.CharField(max_length=200, choices=PLAYERS, null=True)
+    week_number  = models.PositiveSmallIntegerField(null=True )
+    year    = models.PositiveSmallIntegerField(default=2025)
+    player       = models.CharField(max_length=200, choices=PLAYERS, null=True, blank=True)
     away = models.CharField(max_length=200, choices =TEAMS, null= True )
     home = models.CharField(max_length=200, choices =TEAMS, null= True )
-    away_score = models.IntegerField(null = True, default=0)    
-    home_score = models.IntegerField(null = True, default=0)
-    selected_pick  = models.CharField(max_length=250, choices=PICK, null = True)
-    actual_winner = models.CharField(max_length=250,  choices=PICK, null = True)
-    status = models.CharField(max_length=6, null=True, choices=STATUS)
-    
-    class Meta:
-        ordering = ['-week_number', 'player'] 
-
-    def __str__(self):
-        return self.selected_pick   
-    
-class WinnerPick1(models.Model):                               # Week_1 year= 2025 'Mr. C.' 
-    week_number  = models.IntegerField(default = 1,null=True )
-    year    = models.IntegerField(default=2025)
-    player       = models.CharField(max_length=200, choices=PLAYERS, default= 'Mr. C.',null=True)
-    away = models.CharField(max_length=200, choices =TEAMS, null= True )
-    home = models.CharField(max_length=200, choices =TEAMS, null= True )
-    away_score = models.IntegerField(null = True, default=0)    
-    home_score = models.IntegerField(null = True, default=0)
-    selected_pick  = models.CharField(max_length=250, choices=PICK, null = True)
-    actual_winner = models.CharField(max_length=250,  choices=PICK, null = True)
+    away_score = models.PositiveSmallIntegerField(null = True, default=0)    
+    home_score = models.PositiveSmallIntegerField(null = True, default=0)
+    selected_pick  = models.CharField(max_length=250, choices=TEAMS, null = True)
+    actual_winner = models.CharField(max_length=250,  choices=TEAMS, null = True)
     status = models.CharField(max_length=6, null=True, choices=STATUS)
     
     class Meta:

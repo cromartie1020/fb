@@ -1,0 +1,61 @@
+{% extends 'teams/base.html' %}
+{% load static %}
+
+{% block title %}
+ List of Games
+{% endblock %}
+
+{% block content %}
+  <table>
+    <tr>
+        <th>
+            Game Id
+        </th>
+        <th>
+            Week Number
+        </th>
+        <th>
+            Away Team 
+        </th>
+        <th>
+            Home Team 
+        </th>
+        <th>
+            Start Date
+        </th>
+        <th>
+            Start Time
+        </th> 
+        <th>
+            Update | Delete | Add Scores
+        </th>
+    </tr>
+   <tr> 
+
+   {% for game in games %}
+    <td>
+        {{ game.id }}
+    </td>
+    <td>
+        {{ game.week_number }}
+    </td>
+    <td>
+        {{ game.away_team }}
+    </td>
+    <td>
+        {{ game.home_team }}
+    </td>
+    <td>
+        {{ game.startdate }}
+    </td>
+    <td>
+        {{ game.starttime }}
+    </td>
+    <td>
+        <a href="#">Update</a> | <a href="#">Delete</a> | <a href="#">Add Scores</a>
+    </td>
+    
+   </tr>
+   {% endfor %}
+  </table>
+{% endblock %}

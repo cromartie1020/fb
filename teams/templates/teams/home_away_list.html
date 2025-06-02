@@ -1,0 +1,26 @@
+{% extends 'teams/base.html' %}
+{% load static %}
+{% block title %}
+ List of Games 
+{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+  <div class="pickWeekBox">
+  <legend>Select your winners
+    <!-- <form action="{% url 'winner_list' %}"> -->
+    {% for game in games %}
+        {{ game.home_team }}
+    {% endfor %}    
+    <form method='POST'>
+        {% csrf_token %}
+        {{ form.as_p}}        
+      
+      <button text="submit" href="{% url 'winnerPickList' games.id %}">Submit</button>
+    </form>
+  </legend>
+</div>
+</div>
+{% endblock%}
+
+
