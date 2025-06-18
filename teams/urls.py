@@ -25,4 +25,5 @@ urlpatterns = [
     path('delete/<int:id>/', views.delete, name='delete'),
     path('search/', views.search, name='search'),
     path('add_scores/<int:id>/', views.add_scores, name='add_scores'),
+    path('scores/<int:id>/',views.scores, name='scores'),
 ]
