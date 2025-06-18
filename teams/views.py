@@ -362,4 +362,64 @@ def add_scores(request,id):
         'form':form
     }
     return render(request, 'teams/winnerPickUpdate.html', context)
+def scores(request,id):
+    global temp 
+    temp = id
+    #Update the scores with each player
+    #Input the selected winner.
+    winners=WinnerPick.objects.all()
+    list = WinnerPick.objects.get(id = id)
+    week_number = list.week_number
+    year = list.year
+    player = list.player 
+    away = list.away
+    home = list.home
+    away_score = list.away_score
+    home_score = list.home_score
+    selected_pick = list.selected_pick
+    actual_winner = list.actual_winner
+    status = list.status
+    instance = list
+    WinnerPickForm(instance = list)
+    if request.method == ('POST' or None):
+        week_number   = request.POST['week_number']
+        year          = request.POST['year']
+        player        = request.POST['player']
+        away          = request.POST['away']
+        home          = request.POST['home']
+        away_score    = request.POST['away_score']
+        home_score    = request.POST['home_score']
+        home_score    = int(home_score)
+        away_score    = int(away_score)
+        week_number   = int(week_number)
+        selected_pick = request.POST['selected_pick']
+        if home_score    > away_score:
+            actual_winner = home
+        if away_score    > home_score:
+            actual_winner = away
+        if actual_winner == selected_pick:
+            status = 'Win'    
+        if actual_winner != selected_pick:
+            status = 'Loss'    
+        if home_score == away_score:
+            actual_winner = 'Tie'
+            status        = 'Tie'    
+        form = WinnerPick( week_number=week_number, year=year, player=player, away= away, home=home, away_score=away_score, home_score=home_score, selected_pick=selected_pick,actual_winner=actual_winner, status=status)
+        form.save()
+        old_winner = WinnerPick(id = temp)
+        old_winner.delete()
+        return redirect('list')
+    context = {
+        'week_number':week_number,
+        'year':2025,
+        'player':player,
+        'away':away,
+        'home':home,
+        'away_score':away_score,
+        'home_score':home_score,
+        'selected_pick':selected_pick,
+        'actual_winner':actual_winner,
+        'status':status,
+    }
+    return render(request, 'teams/winnerPickUp.html', context)
     
