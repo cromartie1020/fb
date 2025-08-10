@@ -4,45 +4,44 @@ from .models import Team, Home_Away,WinnerPick
 from players import PLAYERS,Players # Players in the pool
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-# Add a new Team.
+
+#--------- Add a new Team.------------------------------
 def teamform(request):
+    '''
+    '''
     form = TeamForm(request.POST or None)
             
     if form.is_valid():
         form.save()
 
         form = TeamForm()
-
     return render(request, 'teams/team.html', {'form': form})
 
-
+#---------End of add a new Team--------------------------
 # My home page.
-def homeawayview(request): 
-    """
-    My Home Page. 
-    """                   
+def homeawayview(request):
+    '''
+    '''
     teams = Team.objects.all()
     form = HomeAwayForm(request.POST or None)
-    
     if form.is_valid():
-        #-------------This was added on May 25, 2025-----------------
-        week_number = request.POST['week_number']
-        away        = request.POST['away_team']
-        home        = request.POST['home_team']
-        winner      = WinnerPick(week_number = week_number, year = 2025, player='Mom',away = away, home = home)
-        winner.save()
-        #---------------------------End------------------------------
-        
+        week_number=request.POST['week_number']
+        year = 2025
+        home = request.POST['home_team']
+        away = request.POST['away_team']
+        for player in Players:
+            winner=WinnerPick(week_number=week_number,year=year,player=player,away=away, home=home)
+            winner.save()
         form.save()
         form = HomeAwayForm()
         redirect('winner')
-
     else:
         form = HomeAwayForm()
-        
-
     return render(request, 'teams/select_teams.html', {'form': form, 'teams': teams})
+
 def homeawaylist(request):
+    '''
+    '''
     games = Home_Away.objects.all().order_by('id',)
     context = {
         'games':games
@@ -50,6 +49,8 @@ def homeawaylist(request):
     return render(request, 'teams/home_away_list.html', context)
 
 def print_final(request):
+    '''
+    '''
     winners=WinnerPick.objects.all()
     context = {
         "winners":winners,
@@ -59,6 +60,8 @@ def print_final(request):
 
 
 def winnerPick(request):  # Lets select the winner from a particular week
+    '''
+    '''
     if request.method == ('POST' or None):
         form = WinnerPickForm(request.POST)                                    
         if form.is_valid():
@@ -68,76 +71,67 @@ def winnerPick(request):  # Lets select the winner from a particular week
             return redirect('list')
     else:
         form=WinnerPickForm()
-    
     context={
         "form":form,
        
     }
-    
     return render(request,'teams/select_your_picks.html', context)
 
-def total(request):
-    pass
-
 def print_winners(request):
+    '''
+    '''
     return render(request, 'teams/print_winners.html')
 
 def printWeek(request,week_number  ):  # We also need to check the year.
-    
+    '''
+    '''    
     home_aways = Home_Away.objects.filter(week_number=week_number).order_by('startdate','starttime')
     total=home_aways.count()
-  
     context = {
         'home_aways':home_aways,
         'week_number':week_number,
         'total':total       
     } 
-  
     return render (request,'teams/print_week.html', context)
 
 
 def select_winners(request):
-   
+    '''
+    '''
     week_number=request.GET.get('week_number')
     player=request.GET.get('player')
-    
     selections=Home_Away.objects.filter(week_number=week_number)
-    
     week_number=request.GET.get('week_number')
     home_aways = Home_Away.objects.filter(week_number=week_number).order_by('startdate','starttime')
     total=home_aways.count()
     form=WinnerPickForm()
-
-
     context = {
         'form':form,
         'week_number':week_number,
         'home_aways':home_aways,
         'total':total,
     }
-     
     return render(request, 'teams/select_winners.html', context)    
 
 def print_week(request):  # This function added 7/7/2023 to replace printweek function
+    '''
+    '''
     week_number=request.GET.get('week_number')
     home_aways = Home_Away.objects.filter(week_number=week_number).order_by('startdate','starttime')
-    
-    
     
     context = {
         'home_aways':home_aways,
         'week_number':week_number,
     } 
-    
-           
-
     return render (request,'teams/print_week.html', context)
 
 
 
 def confirm_selections(request):
-    # List our selections from HomeAway and show an option 
-    # to edit my choices.
+    '''
+    List our selections from HomeAway and show an option 
+    to edit my choices.
+    '''
     week_number=request.GET.get('week_number')
     year = request.GET.get('year') 
     #year = request.GET.get((year)
@@ -157,18 +151,16 @@ def confirm_selections(request):
     return render(request, 'teams/print_week.html',context)  
 
 def pick_week(request):
-    
-
-    
+    '''
+    '''
     context = {
         "players":Players,
-
-
     }
     return render(request,'teams/pick_week.html', context)
 
 def save_winners(request):
-    
+    '''
+    '''
     pick=request.GET.get('8')
     print('pick',pick)
     context={
@@ -179,6 +171,8 @@ def save_winners(request):
 
 @login_required
 def winner_select_view(request):
+    '''
+    '''
     week_number=request.GET.get('week_number')
     print('week_number:',week_number)
     home_aways = Home_Away.objects.filter(week_number=week_number).order_by('startdate','starttime')
@@ -196,6 +190,8 @@ def winner_select_view(request):
     return render(request,'teams/select_winners.html',context)
 
 def update(request, id):
+    '''
+    '''
     entry = WinnerPick.objects.get(id=id)
     
     if request.method != 'POST':
@@ -213,8 +209,10 @@ def update(request, id):
     return render(request,'teams/winnerPickUpdate.html',context )
 
 def winnerPickNew(request, id):
-    # Take the HomeAway to get year, home, away, week_number to add to
-    # the winner pick choices.
+    '''
+    Take the HomeAway to get year, home, away, week_number to add to
+    the winner pick choices.
+    '''
     if request.method ==('POST' or None):
         week_number   = request.GET['week_number']
         #year          = request.GET['year']
@@ -247,6 +245,8 @@ def winnerPickNew(request, id):
     
     
 def winnerPickList(request):
+    '''
+    '''
     list=WinnerPick.objects.all().order_by('-id',)
     p= Paginator(list,16)
     page_number = request.GET.get('page')
@@ -269,6 +269,8 @@ def winnerPickList(request):
     #return render(request, 'teams/paginator.html', context)       # This is a paginator setup
 
 def print_player_week_selections(request):
+    '''
+    '''
     form =WinnerPickForm()
     if request.method=='POST':
         week_number = request.POST['week_number']
@@ -289,6 +291,8 @@ def print_player_week_selections(request):
     return render(request,'teams/print_player_week_selections.html', context)
 
 def pick_winner_list(request):
+    '''
+    '''
     week_number=request.GET.get('week_number')
     year = request.GET.get('year') 
     player = request.GET.get('player')
@@ -303,8 +307,10 @@ def pick_winner_list(request):
     return render(request,'teams/print_player_week_selections.html',context)
 
 def delete(request, id):
+    '''
+    '''
     success=''
-    winner=winnerPick.objects.get(id=id)
+    winner=WinnerPick.objects.get(id=id)
     winner.delete()
     success='You have deleted the winner.'
     context = {
@@ -313,73 +319,19 @@ def delete(request, id):
     return render(request, 'teams/delete.html',context)
 
 def games(request):
+    '''
+    '''
     games=Home_Away.objects.all().order_by('id', 'week_number','startdate', 'starttime')
     context = {
         'games':games,
     }
     return render(request, 'teams/home_away.html',context)   
-'''
-def winnerPickUp(request, id):
-    global  temp
-    temp = id
-    
-    if request.method == ('POST' or None):
-        #form = WinnerPickForm(request.POST)
-            
-            # Generate winnerPick from week_number, year, player etc
-              
-        week_number = request.POST['week_number']
-        year = request.POST['year']
-        year= int(year)
-        player = request.POST['player']
-        away = request.POST['away']
-        home = request.POST['home']
-        away_score = request.POST['away_score']
-        away_score = int(away_score)
-        home_score = request.POST['home_score']
-        home_score = int(home_score)
-        selected_pick = request.POST['selected_pick']
-        actual_winner=request.POST['actual_winner']
-        if home_score > away_score:
-            actual_winner = home
-        elif away_score > home_score:
-            actual_winner = away
-        else:
-            actual_winner = 'Tie'    
-              
-        if selected_pick == actual_winner:
-            status = 'Win'
-        elif selected_pick != actual_winner:
-            status = 'Loss'
-        if actual_winner == 'Tie': 
-            status = 'Tie'              
-        #status = request.POST['status']
-        winner = WinnerPick.objects.create(week_number=week_number, year= year,player= player,away=away,home=home,away_score=away_score,home_score=home_score,selected_pick = selected_pick,actual_winner=actual_winner,status = status)
-        
-        winner_old = WinnerPick.objects.get(id=temp)
-        winner_old.delete()
-        return redirect('list')
-    
-    # Values found from Home_Away object.
-    # week_number, home_team and away_team
-    
-    selected = Home_Away.objects.get(id=id)   
-    week_number = selected.week_number
-    home   = selected.home_team
-    away   = selected.away_team
-    
-    context = {
-        'id'         :id,
-        'year'       :2025,
-        'week_number':week_number,
-        'home'  :home,
-        'away'  :away,
-    }
 
-    return render(request, 'teams/winnerPickUp.html', context)
- '''   
 def scores(request,id):
-    
+    '''
+    '''
+    global temp
+    temp = id
     #Update the scores with each player
     #Input the selected winner.
     winners=WinnerPick.objects.all()
@@ -427,19 +379,13 @@ def scores(request,id):
         if home_score == away_score:
             actual_winner = 'Tie'
             status        = 'Tie'    
-        '''
-        print('actual_winner: ',actual_winner)         
-        if (home_score > away_score) and (selected_pick == home):
-            status = 'Win'    
-        if (away_score > home_score) and (selected_pick == home):
-            status = 'Loss'    
-        if away_score == home_score:
-            status = 'Tie'
-            actual_winner = 'Tie'
-        '''        
+        ual_winner = 'Tie'
+                
         form = WinnerPick( week_number=week_number, year=year, player=player, away= away, home=home, away_score=away_score, home_score=home_score, selected_pick=selected_pick,actual_winner=actual_winner, status=status)
         
         form.save()
+        winner = WinnerPick.objects.get(id=temp)
+        winner.delete()
         return redirect('list')
         
     context = {
@@ -455,4 +401,52 @@ def scores(request,id):
         'status':status,
     }
     return render(request, 'teams/winnerPickUp.html', context)
+
+        
+def scoresNew(request):
+    '''
+    '''
+    if request.method != 'POST':
+        form = WinnerPickForm()
+    else:
+        form = WinnerPickForm(request.POST)
+        if form.is_valid():
+           form.save()
+        return redirect('list')        
+    context = {
+
+        
+        'form':form,
+    }
+    return render(request,'teams/winnerPickUpdate.html',context )
+    
+def total(request):
+    '''
+    The Total number of wins per week for each player. 
+    '''
+    print('function total called')
+    results = []   # This hold the player and the total wins
+    for week_number  in range (1, 19):
+        
+        
+        for player in Players:
+             
+            # Total number of wins in week_number for that particular player. 
+            total=WinnerPick.objects.filter(week_number=week_number).filter(player = player).filter(status='Win').count()
+            
+            
+            if total >= 1: 
+                results.append(f'{player} has won {total} game(s) in week number {week_number}.')
+                #results.append(week_number)
+                #results.append(total)
+                
+                
+                #results.append(f'{player} has won {total}  game in week number {week_number}.')
+    print(results)            
+                            
+    context={
+        'results':results,
+        
+    }        
+    return render(request, 'teams/total.html', context)        
     
