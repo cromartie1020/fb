@@ -18,13 +18,14 @@ urlpatterns = [
     path('week/',views.winner_select_view, name='winner_select'),
     path('list/', views.winnerPickList, name='list'), 
     path('update/<int:id>/', views.update, name='update'),  
-    #path('winnerPickNew/<int:id>/', views.winnerPickNew, name='winnerPickNew'),
     path('winner_list/',views.print_player_week_selections, name='winner_list'),
     path('pick_winner_list/', views.pick_winner_list, name='pick_winner_list'),
-    #path('winner1/',views.winnerPick1,name='winner1'),
     path('delete/<int:id>/', views.delete, name='delete'),
     path('winnerPickNew/<int:id>/', views.winnerPickNew, name='winnerPickNew'),
     path('games/', views.games, name='games'),
-   #path('winnerPickUp/', views.winnerPickUp, name= 'winnerPickUp'),
     path('scores/<int:id>/', views.scores, name='scores'),
+    path('scoresNew/', views.scoresNew, name = 'scoresNew'),
+    path('total/', views.total, name='total'),
+    path('totalWins/', views.totalWins, name='totalWins'),
+    
 ]

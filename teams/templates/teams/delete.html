@@ -8,6 +8,7 @@
 {% block content %}
 
 <h1 class = "center m-5">
-    {{ success }}
+   {{ success }} 
+   <a href="{% url 'list' %}">Return to the list of results.</a> 
 </h1>    
 {% endblock %}

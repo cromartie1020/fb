@@ -1,0 +1,46 @@
+{% extends 'teams/base.html' %}
+{% load static %}
+
+{% block title %}
+   Number of Wins
+{% endblock %}
+
+{% block content %}
+
+<h1 class = "center m-5">
+   List Number of Wins for each player in each week. 
+</h1>    
+<table>
+    <tr>
+      <th>
+        Player
+      </th>
+      <th>
+        Week
+      </th>
+      <th>
+        Wins
+      </th>
+      <th>
+        Total Wins
+      </th>
+   </tr>  
+   {% for player in players %}
+   <tr>
+      <td>
+        {{ player }}
+      </td>
+      <td>
+        {{ week }}
+      </td>
+      <td>
+        {{ wins }}
+
+      </td>
+      <td>
+        {{ total }}
+      </td>
+   </tr>
+   {% endfor %}
+</table>
+{% endblock %}

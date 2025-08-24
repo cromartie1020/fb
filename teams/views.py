@@ -449,4 +449,23 @@ def total(request):
         
     }        
     return render(request, 'teams/total.html', context)        
-    
+
+def totalWins(request):
+    '''
+    The Total number of wins per player.
+    '''
+    results =[]
+    result = 0
+    players=len(Players)  # Total number of players in the pool.
+   # This hold the player and the total wins
+    for week_number  in range (1, 19):
+        for player in Players:
+            total=WinnerPick.objects.filter(player = player).filter(status='Win').filter(week_number=week_number).count()
+            if total >= 1: 
+                result+=1
+            results.append( f"{player} has won {result} game(s) in the season.")
+    results=results[-1:-players-1:-1]            
+    context={
+        'results':results,
+    }        
+    return render(request, 'teams/totalWins.html', context)    
