@@ -464,7 +464,8 @@ def totalWins(request):
             if total >= 1: 
                 result+=1
             results.append( f"{player} has won {result} game(s) in the season.")
-    results=results[-1:-players-1:-1]            
+    results=results[-1:-players-1:-1]       
+    print('results', results)     
     context={
         'results':results,
     }        
